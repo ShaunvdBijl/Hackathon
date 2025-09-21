@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belgium Campus iTversity - Hackathon Hub</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <div id="navigation-container"></div>
+
+    <!-- Home Page -->
+    <div id="home-container"></div>
+
+    <!-- Hackathons Page -->
+    <div id="hackathons-container"></div>
+
+    <!-- Login Page -->
+    <div id="login-container"></div>
+
+    <!-- Student Portal -->
+    <div id="student-portal-container"></div>
+
+    <!-- Footer -->
+    <div id="footer-container"></div>
+
+    <!-- Load JavaScript modules -->
+    <script src="js/data.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/hackathons.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/main.js"></script>
+    
+    <!-- Load HTML components -->
+    <script>
+        // Load HTML components
+        async function loadComponent(containerId, filePath) {
+            try {
+                const response = await fetch(filePath);
+                const html = await response.text();
+                document.getElementById(containerId).innerHTML = html;
+            } catch (error) {
+                console.error(`Error loading ${filePath}:`, error);
+            }
+        }
+
+        // Load all components when DOM is ready
+        document.addEventListener('DOMContentLoaded', async function() {
+            await Promise.all([
+                loadComponent('navigation-container', 'components/navigation.html'),
+                loadComponent('home-container', 'pages/home.html'),
+                loadComponent('hackathons-container', 'pages/hackathons.html'),
+                loadComponent('login-container', 'pages/login.html'),
+                loadComponent('student-portal-container', 'pages/student-portal.html'),
+                loadComponent('footer-container', 'partials/footer.html')
+            ]);
+            
+            // Initialize app after components are loaded
+            if (typeof initializeApp === 'function') {
+                initializeApp();
+            }
+        });
+    </script>
+</body>
+</html>

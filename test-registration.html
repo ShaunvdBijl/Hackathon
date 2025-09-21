@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Registration - Belgium Campus iTversity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .test-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #34495e;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .debug-info {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+            border: 1px solid #dee2e6;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .small-text {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>🧪 Registration Test</h1>
+            <p>Isolated test for Create Account functionality</p>
+        </div>
+        
+        <form id="testRegistrationForm">
+            <div class="form-group">
+                <label for="testFirstName">First Name</label>
+                <input type="text" id="testFirstName" name="firstName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="testLastName">Last Name</label>
+                <input type="text" id="testLastName" name="lastName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="testEmail">Email</label>
+                <input type="email" id="testEmail" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="testStudentId">Student ID</label>
+                <input type="text" id="testStudentId" name="studentId" placeholder="e.g., 123456" maxlength="6" required>
+                <div class="small-text">Must be exactly 6 characters</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="testPassword">Password</label>
+                <input type="password" id="testPassword" name="password" required>
+                <div class="small-text">8+ characters, 1 number, 1 special character</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="testConfirmPassword">Confirm Password</label>
+                <input type="password" id="testConfirmPassword" name="confirmPassword" required>
+            </div>
+            
+            <button type="submit" class="btn" id="testSubmitBtn">🚀 Create Account</button>
+        </form>
+        
+        <div id="testResult"></div>
+        
+        <div class="debug-info">
+            <strong>Debug Info:</strong><br>
+            Browser: <span id="debugBrowser"></span><br>
+            Extensions: <span id="debugExtensions"></span><br>
+            JavaScript: <span id="debugJS">✅ Working</span>
+        </div>
+    </div>
+
+    <script>
+        // Immediately test if JavaScript is working
+        console.log('🧪 Test Registration Page - JavaScript is working!');
+        
+        // Detect browser and extensions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Detect browser
+            const isChrome = navigator.userAgent.indexOf('Chrome') > -1;
+            const isFirefox = navigator.userAgent.indexOf('Firefox') > -1;
+            const isSafari = navigator.userAgent.indexOf('Safari') > -1 && navigator.userAgent.indexOf('Chrome') === -1;
+            
+            let browserName = 'Unknown';
+            if (isChrome) browserName = 'Chrome';
+            else if (isFirefox) browserName = 'Firefox';
+            else if (isSafari) browserName = 'Safari';
+            
+            document.getElementById('debugBrowser').textContent = browserName;
+            
+            // Detect common extensions that might interfere
+            const extensionElements = [
+                'quillbot', 'grammarly', 'adblock', 'ublock'
+            ];
+            
+            let extensionsDetected = [];
+            extensionElements.forEach(ext => {
+                if (document.querySelector(`[class*="${ext}"], [id*="${ext}"]`) || 
+                    window[ext] || 
+                    navigator.userAgent.toLowerCase().includes(ext)) {
+                    extensionsDetected.push(ext);
+                }
+            });
+            
+            // Check for QuillBot specifically
+            if (window.quillbot || document.querySelector('[class*="quillbot"]') || 
+                typeof window.quillbotContentScript !== 'undefined') {
+                extensionsDetected.push('QuillBot');
+            }
+            
+            document.getElementById('debugExtensions').textContent = 
+                extensionsDetected.length > 0 ? extensionsDetected.join(', ') : 'None detected';
+            
+            console.log('🔍 Browser:', browserName);
+            console.log('🔍 Extensions detected:', extensionsDetected);
+            
+            // Setup form handler
+            setupRegistrationForm();
+        });
+        
+        function setupRegistrationForm() {
+            console.log('🔧 Setting up registration form...');
+            
+            const form = document.getElementById('testRegistrationForm');
+            const resultDiv = document.getElementById('testResult');
+            
+            if (!form) {
+                console.error('❌ Form not found!');
+                return;
+            }
+            
+            console.log('✅ Form found, adding event listener...');
+            
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                console.log('🚀 Form submitted!');
+                
+                // Clear previous results
+                resultDiv.innerHTML = '';
+                
+                // Get form data
+                const formData = {
+                    firstName: document.getElementById('testFirstName').value.trim(),
+                    lastName: document.getElementById('testLastName').value.trim(),
+                    email: document.getElementById('testEmail').value.trim(),
+                    studentId: document.getElementById('testStudentId').value.trim(),
+                    password: document.getElementById('testPassword').value,
+                    confirmPassword: document.getElementById('testConfirmPassword').value
+                };
+                
+                console.log('📝 Form data:', formData);
+                
+                // Validate data
+                const validation = validateFormData(formData);
+                if (!validation.valid) {
+                    showResult(validation.message, 'error');
+                    return;
+                }
+                
+                // Update button state
+                const submitBtn = document.getElementById('testSubmitBtn');
+                const originalText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = '⏳ Creating Account...';
+                
+                try {
+                    console.log('📡 Sending request to server...');
+                    
+                    const response = await fetch('server/auth.php?action=register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'include',
+                        body: JSON.stringify({
+                            firstName: formData.firstName,
+                            lastName: formData.lastName,
+                            email: formData.email,
+                            studentId: formData.studentId,
+                            password: formData.password
+                        })
+                    });
+                    
+                    console.log('📡 Response status:', response.status);
+                    const data = await response.json();
+                    console.log('📡 Response data:', data);
+                    
+                    if (response.ok && (data.ok || data.success)) {
+                        showResult('✅ Account created successfully! You can now login with your credentials.', 'success');
+                        form.reset();
+                    } else {
+                        const errorMessage = data.error || data.message || 'Registration failed';
+                        showResult('❌ Registration failed: ' + errorMessage, 'error');
+                    }
+                    
+                } catch (error) {
+                    console.error('❌ Network error:', error);
+                    showResult('❌ Network error: ' + error.message, 'error');
+                } finally {
+                    // Restore button
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalText;
+                }
+            });
+            
+            console.log('✅ Registration form setup complete!');
+        }
+        
+        function validateFormData(data) {
+            if (!data.firstName || !data.lastName || !data.email || !data.studentId || !data.password || !data.confirmPassword) {
+                return { valid: false, message: 'Please fill in all required fields.' };
+            }
+            
+            if (data.password !== data.confirmPassword) {
+                return { valid: false, message: 'Passwords do not match.' };
+            }
+            
+            if (data.studentId.length !== 6) {
+                return { valid: false, message: 'Student ID must be exactly 6 characters.' };
+            }
+            
+            if (data.password.length < 8) {
+                return { valid: false, message: 'Password must be at least 8 characters long.' };
+            }
+            
+            if (!/\d/.test(data.password)) {
+                return { valid: false, message: 'Password must contain at least 1 number.' };
+            }
+            
+            if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(data.password)) {
+                return { valid: false, message: 'Password must contain at least 1 special character.' };
+            }
+            
+            return { valid: true };
+        }
+        
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('testResult');
+            resultDiv.className = type;
+            resultDiv.innerHTML = message;
+            console.log(`📋 ${type.toUpperCase()}: ${message}`);
+        }
+        
+        // Test if form submission works with a simple click test
+        function testButtonClick() {
+            console.log('🧪 Button click test function called');
+            alert('✅ Button click is working! JavaScript is functioning properly.');
+        }
+        
+        // Add a test button for debugging
+        setTimeout(() => {
+            const testBtn = document.createElement('button');
+            testBtn.textContent = '🧪 Test Button Click';
+            testBtn.type = 'button';
+            testBtn.onclick = testButtonClick;
+            testBtn.style.cssText = 'margin-top: 1rem; padding: 0.5rem 1rem; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer;';
+            document.querySelector('.test-container').appendChild(testBtn);
+        }, 1000);
+    </script>
+</body>
+</html>
