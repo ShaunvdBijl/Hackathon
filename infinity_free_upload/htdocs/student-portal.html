@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belgium Campus iTversity - Student Portal</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .auth-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 500px;
+            margin: 2rem auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #2c3e50;
+        }
+        
+        .btn-secondary {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .auth-switch {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .auth-switch a {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            color: white;
+            font-weight: 600;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: #28a745;
+        }
+        
+        .notification.error {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><i class="fas fa-graduation-cap"></i> Belgium Campus iTversity</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#hackathons" class="nav-link">Hackathons</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#student-portal" class="nav-link active">Student Portal</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Student Portal Page -->
+    <section id="student-portal" class="page active">
+        <div class="login-container">
+            <!-- Sign Up Form -->
+            <div class="auth-form" id="signupForm">
+                <h2>Student Portal Sign Up</h2>
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="regFirstName">First Name</label>
+                        <input type="text" id="regFirstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regLastName">Last Name</label>
+                        <input type="text" id="regLastName" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regEmail">Email</label>
+                        <input type="email" id="regEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regStudentId">Student ID</label>
+                        <input type="text" id="regStudentId" name="studentId" placeholder="e.g., 202400" maxlength="6" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <input type="password" id="regPassword" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="regConfirmPassword">Confirm Password</label>
+                        <input type="password" id="regConfirmPassword" name="confirmPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </form>
+                <p class="auth-switch">
+                    Already have an account? <a href="#" onclick="showLoginForm()">Login here</a>
+                </p>
+            </div>
+
+            <!-- Login Form -->
+            <div class="auth-form" id="loginFormDiv" style="display: none;">
+                <h2>Student Portal Login</h2>
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <p class="auth-switch">
+                    Don't have an account? <a href="#" onclick="showSignupForm()">Sign up here</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Check if user is already logged in
+        function checkExistingSession() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+            if (currentUser && currentUser.email) {
+                // User is already logged in, redirect to dashboard
+                showNotification('Welcome back! Redirecting to dashboard...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+                return true;
+            }
+            return false;
+        }
+        
+        // Simple notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+        
+        // Form switching
+        function showSignupForm() {
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('loginFormDiv').style.display = 'none';
+        }
+        
+        function showLoginForm() {
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('loginFormDiv').style.display = 'block';
+        }
+        
+        // Check existing session when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            if (checkExistingSession()) {
+                return; // User will be redirected
+            }
+        });
+        
+        // Registration form
+        document.getElementById('registrationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                firstName: document.getElementById('regFirstName').value.trim(),
+                lastName: document.getElementById('regLastName').value.trim(),
+                email: document.getElementById('regEmail').value.trim(),
+                studentId: document.getElementById('regStudentId').value.trim(),
+                password: document.getElementById('regPassword').value,
+                confirmPassword: document.getElementById('regConfirmPassword').value
+            };
+            
+            // Validation
+            if (!formData.firstName || !formData.lastName || !formData.email || !formData.studentId || !formData.password || !formData.confirmPassword) {
+                showNotification('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            if (formData.password !== formData.confirmPassword) {
+                showNotification('Passwords do not match.', 'error');
+                return;
+            }
+            
+            if (formData.studentId.length !== 6) {
+                showNotification('Student ID must be exactly 6 characters.', 'error');
+                return;
+            }
+            
+            if (formData.password.length < 8) {
+                showNotification('Password must be at least 8 characters long.', 'error');
+                return;
+            }
+            
+            // Submit registration
+            try {
+                const response = await fetch('server/auth.php?action=register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        firstName: formData.firstName,
+                        lastName: formData.lastName,
+                        email: formData.email,
+                        studentId: formData.studentId,
+                        password: formData.password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && (data.ok || data.success)) {
+                    showNotification('Account created successfully! Please login.', 'success');
+                    this.reset();
+                    showLoginForm();
+                } else {
+                    showNotification(data.error || 'Registration failed', 'error');
+                }
+            } catch (error) {
+                showNotification('Registration failed. Please try again.', 'error');
+            }
+        });
+        
+        // Login form
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            console.log('🚀 LOGIN FORM SUBMITTED - Event triggered');
+            console.log('📝 Form element:', this);
+            console.log('🎯 Form ID:', this.id);
+            console.log('🔍 Event type:', e.type);
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            console.log('📧 Email entered:', email);
+            console.log('🔑 Password entered:', password ? '[HIDDEN]' : 'EMPTY');
+            
+            if (!email || !password) {
+                console.log('❌ Validation failed - missing email or password');
+                showNotification('Please enter both email and password.', 'error');
+                return;
+            }
+            
+            console.log('✅ Validation passed, proceeding with login request...');
+            
+            try {
+                console.log('🔐 Attempting login for:', email);
+                const response = await fetch('server/auth.php?action=login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                console.log('📡 Response received:', response);
+                console.log('📊 Response status:', response.status);
+                
+                const data = await response.json();
+                console.log('📡 Server response data:', data);
+                
+                if (response.ok && data.ok) {
+                    console.log('✅ Login successful, redirecting to dashboard...');
+                    showNotification('Login successful! Redirecting to dashboard...', 'success');
+                    
+                    // Store user data in localStorage for dashboard
+                    const userData = {
+                        email: data.email,
+                        name: data.name,
+                        type: data.type
+                    };
+                    console.log('💾 Storing user data in localStorage:', userData);
+                    localStorage.setItem('currentUser', JSON.stringify(userData));
+                    
+                    // Verify localStorage was set
+                    const storedData = localStorage.getItem('currentUser');
+                    console.log('🔍 Verification - localStorage now contains:', storedData);
+                    
+                    // Force redirect to dashboard
+                    console.log('⏰ Setting redirect timer...');
+                    setTimeout(() => {
+                        console.log('🚀 Redirecting to dashboard.html');
+                        console.log('📍 Current location before redirect:', window.location.href);
+                        window.location.replace('dashboard.html');
+                    }, 1000);
+                } else {
+                    console.log('❌ Login failed:', data.error);
+                    console.log('❌ Full response data:', data);
+                    showNotification(data.error || 'Login failed', 'error');
+                }
+            } catch (error) {
+                console.error('💥 Login error:', error);
+                showNotification('Login failed. Please try again.', 'error');
+            }
+        });
+    </script>
+</body>
+</html>

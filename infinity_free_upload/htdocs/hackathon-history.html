@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon History - Student Portal</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hackathon-section {
+            margin-bottom: 3rem;
+        }
+
+        .hackathon-section h3 {
+            color: var(--bc-primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--bc-accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hackathon-section h3 i {
+            color: var(--bc-secondary);
+        }
+
+        .hackathons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .hackathon-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 1px solid #e1e8ed;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hackathon-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .hackathon-card h4 {
+            color: var(--bc-primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .hackathon-card p {
+            color: var(--bc-text);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .hackathon-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e1e8ed;
+        }
+
+        .hackathon-meta span {
+            font-size: 0.9rem;
+            color: var(--bc-gray);
+        }
+
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status.registered {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.completed {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status.upcoming {
+            background: #fff3cd;
+            color: #856404;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><i class="fas fa-graduation-cap"></i> Belgium Campus iTversity</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#hackathons" class="nav-link">Hackathons</a>
+                </li>
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link active">Student Portal</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hackathon History Page -->
+    <section id="hackathon-history" class="page active">
+        <div class="container">
+            <div class="page-header">
+                <a href="dashboard.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+                <h1>Hackathon History</h1>
+            </div>
+            
+            <div class="portal-content">
+                <h2>Your Hackathon Participation</h2>
+
+                <!-- Registered For Section -->
+                <div class="hackathon-section">
+                    <h3><i class="fas fa-user-check"></i> Registered For</h3>
+                    <div class="hackathons-grid" id="registered-hackathons">
+                        <div class="text-center" style="grid-column: 1 / -1; padding: 2rem;">
+                            <i class="fas fa-calendar-plus" style="font-size: 3rem; color: var(--bc-gray); margin-bottom: 1rem;"></i>
+                            <h4 style="color: var(--bc-gray);">No Upcoming Registrations</h4>
+                            <p style="color: var(--bc-gray);">Register for hackathons to see them here.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Past Attempted Section -->
+                <div class="hackathon-section">
+                    <h3><i class="fas fa-history"></i> Past Attempted</h3>
+                    <div class="hackathons-grid" id="past-hackathons">
+                        <div class="text-center" style="grid-column: 1 / -1; padding: 2rem;">
+                            <i class="fas fa-calendar-times" style="font-size: 3rem; color: var(--bc-gray); margin-bottom: 1rem;"></i>
+                            <h4 style="color: var(--bc-gray);">No Past Participation</h4>
+                            <p style="color: var(--bc-gray);">Your completed hackathon history will appear here.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3><i class="fas fa-graduation-cap"></i> Belgium Campus iTversity</h3>
+                    <p>Building innovation and collaboration through hackathons.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#hackathons">Hackathons</a></li>
+                        <li><a href="dashboard.html">Student Portal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p>Email: 601681@student.belgiumcampus.ac.za</p>
+                    <p>&copy; <span id="year"></span> Belgium Campus iTversity</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/navigation.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Global variables
+        let currentUser = null;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeHackathonHistory();
+        });
+
+        // Initialize hackathon history page
+        async function initializeHackathonHistory() {
+            console.log('Initializing hackathon history page...');
+
+            // Check authentication
+            const authResult = await checkAuthStatus();
+            console.log('Auth check result:', authResult);
+
+            if (!authResult.authenticated) {
+                console.log('User not authenticated, redirecting to login...');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            currentUser = authResult.user;
+            console.log('User authenticated:', currentUser);
+
+            // Load hackathon data
+            loadHackathonHistory();
+        }
+
+        // Load hackathon history from server
+        async function loadHackathonHistory() {
+            try {
+                console.log('Loading hackathon history...');
+
+                // Load registered hackathons
+                const registeredResponse = await fetch('server/hackathon-registrations.php?action=get_user_registrations&userEmail=' + encodeURIComponent(currentUser.email));
+                const registeredData = await registeredResponse.json();
+
+                // Load past hackathons (submissions)
+                const pastResponse = await fetch('server/submissions.php?action=user_submissions&user_email=' + encodeURIComponent(currentUser.email));
+                const pastData = await pastResponse.json();
+
+                console.log('Registered data:', registeredData);
+                console.log('Past data:', pastData);
+
+                // Display registered hackathons
+                displayRegisteredHackathons(registeredData.registrations || []);
+
+                // Display past hackathons
+                displayPastHackathons(pastData.submissions || []);
+
+            } catch (error) {
+                console.error('Error loading hackathon history:', error);
+                if (typeof showNotification === 'function') {
+                    showNotification('Error loading hackathon history. Please try again.', 'error');
+                }
+            }
+        }
+
+        // Display registered hackathons
+        function displayRegisteredHackathons(registrations) {
+            const container = document.getElementById('registered-hackathons');
+
+            if (registrations.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center" style="grid-column: 1 / -1; padding: 2rem;">
+                        <i class="fas fa-calendar-plus" style="font-size: 3rem; color: var(--bc-gray); margin-bottom: 1rem;"></i>
+                        <h4 style="color: var(--bc-gray);">No Upcoming Registrations</h4>
+                        <p style="color: var(--bc-gray);">Register for hackathons to see them here.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = registrations.map(reg => createHackathonCard(reg, 'registered')).join('');
+        }
+
+        // Display past hackathons
+        function displayPastHackathons(submissions) {
+            const container = document.getElementById('past-hackathons');
+
+            if (submissions.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center" style="grid-column: 1 / -1; padding: 2rem;">
+                        <i class="fas fa-calendar-times" style="font-size: 3rem; color: var(--bc-gray); margin-bottom: 1rem;"></i>
+                        <h4 style="color: var(--bc-gray);">No Past Participation</h4>
+                        <p style="color: var(--bc-gray);">Your completed hackathon history will appear here.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = submissions.map(sub => createHackathonCard(sub, 'completed')).join('');
+        }
+
+        // Create hackathon card
+        function createHackathonCard(hackathon, status) {
+            const statusClass = status === 'registered' ? 'registered' : 'completed';
+            const statusText = status === 'registered' ? 'Registered' : 'Completed';
+
+            return `
+                <div class="hackathon-card">
+                    <h4>${hackathon.title || hackathon.hackathon_title || 'Hackathon'}</h4>
+                    <p class="description">${hackathon.description || 'Hackathon participation'}</p>
+                    <div class="hackathon-meta">
+                        <span class="date">${hackathon.date || hackathon.createdAt || 'Date TBA'}</span>
+                        <span class="status ${statusClass}">${statusText}</span>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

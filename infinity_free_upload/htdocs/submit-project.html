@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Project - Student Portal</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/navigation.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><i class="fas fa-graduation-cap"></i> Belgium Campus iTversity</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="index.html#hackathons" class="nav-link">Hackathons</a>
+                </li>
+                <li class="nav-item">
+                    <a href="dashboard.html" class="nav-link active">Student Portal</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- New Submission Page -->
+    <section id="new-submission" class="page active">
+        <div class="container">
+            <div class="page-header">
+                <button onclick="navigateToDashboard()" 
+                        style="pointer-events: auto !important; cursor: pointer !important; padding: 12px 24px; background: #6c757d; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; transition: background-color 0.3s; position: relative; z-index: 1000;"
+                        onmouseover="this.style.backgroundColor='#5a6268'"
+                        onmouseout="this.style.backgroundColor='#6c757d'">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </button>
+                <h1>Submit New Project</h1>
+            </div>
+            
+            <div class="portal-content">
+                <h2>Submit Your Project</h2>
+                <!-- PROJECT SUBMISSION FORM -->
+                <div style="background: white; padding: 30px; margin: 20px 0; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); position: relative; z-index: 999;">
+                    <h3 style="color: #333; margin-bottom: 20px;">Project Submission Form</h3>
+                    <p style="color: #666; margin-bottom: 20px;">Please fill out all fields to submit your project</p>
+                    
+                    <form id="submissionForm" style="position: relative; z-index: 1000;">
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Project Title *</label>
+                            <input type="text" id="submissionTitle" name="submissionTitle" required 
+                                   style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px; background: white; pointer-events: auto; cursor: text; position: relative; z-index: 1001; transition: border-color 0.3s;"
+                                   placeholder="Enter your project title..."
+                                   onfocus="this.style.borderColor='#007bff'"
+                                   onblur="this.style.borderColor='#ddd'">
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Project Description *</label>
+                            <textarea id="submissionDesc" name="submissionDesc" rows="4" required 
+                                      style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px; background: white; pointer-events: auto; cursor: text; position: relative; z-index: 1001; resize: vertical; transition: border-color 0.3s;"
+                                      placeholder="Describe your project, its features, and what makes it unique..."
+                                      onfocus="this.style.borderColor='#007bff'"
+                                      onblur="this.style.borderColor='#ddd'"></textarea>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Project Link (Optional)</label>
+                            <input type="url" id="submissionLink" name="submissionLink" 
+                                   style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px; background: white; pointer-events: auto; cursor: text; position: relative; z-index: 1001; transition: border-color 0.3s;"
+                                   placeholder="https://github.com/username/project or https://drive.google.com/..."
+                                   onfocus="this.style.borderColor='#007bff'"
+                                   onblur="this.style.borderColor='#ddd'">
+                            <small style="color: #666; font-size: 14px; margin-top: 5px; display: block;">
+                                Provide either a project link OR upload files below (at least one is required)
+                            </small>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #333;">Project Category *</label>
+                            <select id="submissionCategory" name="submissionCategory" required 
+                                    style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px; background: white; pointer-events: auto; cursor: pointer; position: relative; z-index: 1001; transition: border-color 0.3s;"
+                                    onfocus="this.style.borderColor='#007bff'"
+                                    onblur="this.style.borderColor='#ddd'">
+                                <option value="">Select a category</option>
+                                <option value="iot">IoT & Hardware</option>
+                                <option value="drone">Drone Technology</option>
+                                <option value="3d-printing">3D Printing & Manufacturing</option>
+                                <option value="vr-ar">VR & Augmented Reality</option>
+                                <option value="software">Software & Development</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Project File Upload Section -->
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 10px; font-weight: bold; color: #333;">Project Files (Optional - Alternative to Link)</label>
+                            <p style="color: #666; font-size: 14px; margin-bottom: 15px;">
+                                <strong>Alternative submission method:</strong> Upload your project files as a compressed archive if you don't have an online link. 
+                                Include source code, documentation, and any additional resources.
+                            </p>
+                            
+                            <!-- Drag and Drop Area -->
+                            <div id="dropZone" style="
+                                border: 3px dashed #007bff;
+                                border-radius: 10px;
+                                padding: 40px 20px;
+                                text-align: center;
+                                background: #f8f9fa;
+                                transition: all 0.3s ease;
+                                cursor: pointer;
+                                position: relative;
+                                z-index: 1001;
+                                margin-bottom: 15px;
+                            " 
+                            ondragover="handleDragOver(event)" 
+                            ondragleave="handleDragLeave(event)"
+                            ondrop="handleDrop(event)"
+                            onclick="document.getElementById('fileInput').click()">
+                                <div id="dropContent">
+                                    <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #007bff; margin-bottom: 15px;"></i>
+                                    <h3 style="color: #333; margin-bottom: 10px;">Drag & Drop Your Project Files Here</h3>
+                                    <p style="color: #666; margin-bottom: 15px;">or click to browse and select files</p>
+                                    <p style="color: #999; font-size: 14px;">Supported formats: ZIP, RAR, 7Z (Max: 50MB)</p>
+                                </div>
+                                
+                                <!-- Upload Progress -->
+                                <div id="uploadProgress" style="display: none; margin-top: 20px;">
+                                    <div style="background: #e9ecef; border-radius: 10px; height: 20px; overflow: hidden; margin-bottom: 10px;">
+                                        <div id="progressBar" style="
+                                            background: linear-gradient(90deg, #28a745, #20c997);
+                                            height: 100%;
+                                            width: 0%;
+                                            transition: width 0.3s ease;
+                                            border-radius: 10px;
+                                        "></div>
+                                    </div>
+                                    <p id="progressText" style="color: #666; font-size: 14px;">Uploading...</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Hidden File Input -->
+                            <input type="file" id="fileInput" accept=".zip,.rar,.7z" style="display: none;" onchange="handleFileSelect(event)">
+                            
+                            <!-- Uploaded Files Display -->
+                            <div id="uploadedFiles" style="display: none; margin-top: 15px;">
+                                <h4 style="color: #333; margin-bottom: 10px;">📁 Uploaded Files:</h4>
+                                <div id="filesList" style="background: #e8f5e8; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745;">
+                                    <!-- File items will be added here -->
+                                </div>
+                            </div>
+                            
+                            <!-- File Upload Notes -->
+                            <div style="background: #e8f4fd; border: 1px solid #bee5eb; border-radius: 8px; padding: 15px; margin-top: 15px;">
+                                <h5 style="color: #0c5460; margin-bottom: 8px;"><i class="fas fa-info-circle"></i> Submission Options:</h5>
+                                <div style="color: #0c5460; font-size: 14px;">
+                                    <p style="margin-bottom: 10px;"><strong>Choose ONE of the following:</strong></p>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                        <div style="background: white; padding: 10px; border-radius: 6px;">
+                                            <strong>🔗 Project Link</strong>
+                                            <ul style="margin: 5px 0 0 15px; font-size: 13px;">
+                                                <li>GitHub repository</li>
+                                                <li>Google Drive folder</li>
+                                                <li>Live website/demo</li>
+                                                <li>Cloud storage link</li>
+                                            </ul>
+                                        </div>
+                                        <div style="background: white; padding: 10px; border-radius: 6px;">
+                                            <strong>📁 File Upload</strong>
+                                            <ul style="margin: 5px 0 0 15px; font-size: 13px;">
+                                                <li>ZIP/RAR/7Z archives</li>
+                                                <li>Include source code</li>
+                                                <li>Add README.md</li>
+                                                <li>Max 50MB per file</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 30px;">
+                            <button type="submit" onclick="submitMainForm(event)" 
+                                    style="padding: 15px 40px; background: #007bff; color: white; border: none; border-radius: 5px; font-size: 16px; font-weight: bold; cursor: pointer; pointer-events: auto; position: relative; z-index: 1001; transition: background-color 0.3s;"
+                                    onmouseover="this.style.backgroundColor='#0056b3'"
+                                    onmouseout="this.style.backgroundColor='#007bff'">
+                                🚀 Submit Project
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3><i class="fas fa-graduation-cap"></i> Belgium Campus iTversity</h3>
+                    <p>Building innovation and collaboration through hackathons.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Explore</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#hackathons">Hackathons</a></li>
+                        <li><a href="dashboard.html">Student Portal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <p>Email: 601681@student.belgiumcampus.ac.za</p>
+                    <p>&copy; <span id="year"></span> Belgium Campus iTversity</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/navigation.js"></script>
+    <script src="js/utils.js"></script>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Navigation function for back button
+        function navigateToDashboard() {
+            console.log('🧭 Navigating back to dashboard...');
+            try {
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.error('❌ Navigation error:', error);
+                alert('Error navigating to dashboard');
+            }
+        }
+        
+
+        
+        // Main submit form function
+        function submitMainForm(event) {
+            event.preventDefault();
+            
+            const title = document.getElementById('submissionTitle').value.trim();
+            const desc = document.getElementById('submissionDesc').value.trim();
+            const link = document.getElementById('submissionLink').value.trim();
+            const category = document.getElementById('submissionCategory').value;
+            
+            if (!title || !desc || !category) {
+                alert('❌ Please fill in all required fields marked with *');
+                return;
+            }
+            
+            // Check that either link OR files are provided (not necessarily both)
+            const hasFiles = uploadedFiles.length > 0 || serverFileInfos.length > 0;
+            const hasLink = link && link.trim() !== '';
+            
+            if (!hasFiles && !hasLink) {
+                alert('❌ Please provide either a project link OR upload project files\n\n' +
+                      '• Project Link: GitHub, Google Drive, website, etc.\n' +
+                      '• File Upload: ZIP/RAR files with your source code');
+                return;
+            }
+            
+            // If link is provided, validate URL format
+            if (hasLink && !link.startsWith('http://') && !link.startsWith('https://')) {
+                alert('❌ Project link must be a valid URL starting with http:// or https://');
+                return;
+            }
+            
+            // Disable submit button to prevent double submission
+            const submitBtn = event.target;
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Submitting...';
+            submitBtn.style.backgroundColor = '#6c757d';
+            
+            // Send data to backend
+            fetch('server/submissions.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: title,
+                    desc: desc,
+                    link: link,
+                    category: category,
+                    files: serverFileInfos.length > 0 ? serverFileInfos : uploadedFiles.map(file => ({
+                        name: file.name,
+                        original_name: file.name,
+                        size: file.size,
+                        type: file.type || getFileType(file.name)
+                    }))
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    // Success - show confirmation and reset form
+                    alert('✅ PROJECT SUBMITTED SUCCESSFULLY!\n\n' +
+                          '📋 Title: ' + title + '\n' +
+                          '📝 Description: ' + desc.substring(0, 50) + (desc.length > 50 ? '...' : '') + '\n' +
+                          '🔗 Link: ' + link + '\n' +
+                          '📁 Category: ' + category + '\n\n' +
+                          '✨ Your submission has been saved to the server!');
+                    
+                    // Reset the form
+                    document.getElementById('submissionForm').reset();
+                    resetFileUpload();
+                    
+                    // Update dashboard if we're on the same domain
+                    if (window.refreshDashboard) {
+                        window.refreshDashboard();
+                    } else {
+                        // Try to refresh dashboard via localStorage event
+                        localStorage.setItem('submission_updated', Date.now());
+                    }
+                } else {
+                    // Error from server
+                    alert('❌ SUBMISSION FAILED\n\n' + (data.error || 'Unknown error occurred'));
+                }
+            })
+            .catch(error => {
+                
+                // Fallback - save to localStorage if server is down
+                const fallbackData = {
+                    title, desc, link, category,
+                    timestamp: new Date().toISOString(),
+                    id: Date.now()
+                };
+                
+                const existingData = JSON.parse(localStorage.getItem('offline_submissions') || '[]');
+                existingData.push(fallbackData);
+                localStorage.setItem('offline_submissions', JSON.stringify(existingData));
+                
+                alert('⚠️ SERVER CONNECTION FAILED\n\n' +
+                      'Your submission has been saved locally as a backup.\n' +
+                      'Please contact the administrator to ensure your submission is recorded.\n\n' +
+                      'Backup ID: ' + fallbackData.id);
+            })
+            .finally(() => {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = '🚀 Submit Project';
+                submitBtn.style.backgroundColor = '#007bff';
+            });
+        }
+        
+        // Handle form submission (backup method)
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('submissionForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    submitForm(e);
+                });
+            }
+        });
+        
+        // Global variables to store uploaded files
+        let uploadedFiles = [];
+        let serverFileInfos = [];
+        
+        // Get current user email from localStorage
+        function getCurrentUserEmail() {
+            try {
+                const userData = localStorage.getItem('currentUser');
+                if (userData) {
+                    const user = JSON.parse(userData);
+                    return user.email;
+                }
+            } catch (error) {
+                console.error('Error getting user email:', error);
+            }
+            return null;
+        }
+        
+        // Drag and Drop Functions
+        function handleDragOver(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropZone = document.getElementById('dropZone');
+            dropZone.style.borderColor = '#28a745';
+            dropZone.style.backgroundColor = '#e8f5e8';
+            dropZone.style.transform = 'scale(1.02)';
+        }
+        
+        function handleDragLeave(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const dropZone = document.getElementById('dropZone');
+            dropZone.style.borderColor = '#007bff';
+            dropZone.style.backgroundColor = '#f8f9fa';
+            dropZone.style.transform = 'scale(1)';
+        }
+        
+        function handleDrop(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const dropZone = document.getElementById('dropZone');
+            dropZone.style.borderColor = '#007bff';
+            dropZone.style.backgroundColor = '#f8f9fa';
+            dropZone.style.transform = 'scale(1)';
+            
+            const files = event.dataTransfer.files;
+            processFiles(files);
+        }
+        
+        function handleFileSelect(event) {
+            const files = event.target.files;
+            processFiles(files);
+        }
+        
+        function processFiles(files) {
+            console.log('📁 Processing', files.length, 'file(s)');
+            
+            // Validate files
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                
+                // Check file type
+                const allowedTypes = ['.zip', '.rar', '.7z'];
+                const fileExtension = '.' + file.name.split('.').pop().toLowerCase();
+                
+                if (!allowedTypes.includes(fileExtension)) {
+                    alert('❌ Invalid file type: ' + file.name + '\\n\\nAllowed formats: ZIP, RAR, 7Z');
+                    return;
+                }
+                
+                // Check file size (50MB = 50 * 1024 * 1024 bytes)
+                const maxSize = 50 * 1024 * 1024;
+                if (file.size > maxSize) {
+                    alert('❌ File too large: ' + file.name + '\\n\\nMaximum size: 50MB\\nYour file: ' + formatFileSize(file.size));
+                return;
+                }
+            }
+            
+            // If validation passed, upload files
+            uploadFiles(files);
+        }
+        
+        async function uploadFiles(files) {
+            const dropZone = document.getElementById('dropZone');
+            const dropContent = document.getElementById('dropContent');
+            const uploadProgress = document.getElementById('uploadProgress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            
+            // Show upload progress
+            dropContent.style.display = 'none';
+            uploadProgress.style.display = 'block';
+            
+            try {
+                // Upload each file to the server
+                const uploadedFileInfos = [];
+                
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const formData = new FormData();
+                    formData.append('projectFile', file);
+                    
+                    // Update progress text
+                    progressText.textContent = `Uploading ${file.name}... (${i + 1}/${files.length})`;
+                    
+                    // Upload file to server
+                    const response = await fetch('server/upload.php', {
+                        method: 'POST',
+                        credentials: 'include',
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Failed to upload ${file.name}`);
+                    }
+                    
+                    const result = await response.json();
+                    if (!result.ok) {
+                        throw new Error(result.error || `Failed to upload ${file.name}`);
+                    }
+                    
+                    // Store file info for later use
+                    uploadedFileInfos.push(result.file_info);
+                    
+                    // Update progress bar
+                    const progress = ((i + 1) / files.length) * 100;
+                    progressBar.style.width = progress + '%';
+                }
+                
+                // All files uploaded successfully
+                progressText.textContent = 'Upload complete!';
+                setTimeout(() => {
+                    completeUpload(files, uploadedFileInfos);
+                }, 500);
+                
+            } catch (error) {
+                console.error('Upload error:', error);
+                
+                // Show error state
+                uploadProgress.style.display = 'none';
+                dropContent.innerHTML = `
+                    <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: #dc3545; margin-bottom: 15px;"></i>
+                    <h3 style="color: #dc3545; margin-bottom: 10px;">❌ Upload Failed</h3>
+                    <p style="color: #666; margin-bottom: 15px;">${error.message}</p>
+                    <p style="color: #999; font-size: 14px;">Click to try again</p>
+                `;
+                dropContent.style.display = 'block';
+                
+                // Reset uploadedFiles array
+                uploadedFiles = [];
+            }
+        }
+        
+        function completeUpload(files, uploadedFileInfos) {
+            const dropZone = document.getElementById('dropZone');
+            const dropContent = document.getElementById('dropContent');
+            const uploadProgress = document.getElementById('uploadProgress');
+            const uploadedFilesDiv = document.getElementById('uploadedFiles');
+            const filesList = document.getElementById('filesList');
+            
+            // Hide progress, show success
+            uploadProgress.style.display = 'none';
+            
+            // Update drop zone to show success state
+            dropZone.style.border = '3px solid #28a745';
+            dropZone.style.backgroundColor = '#e8f5e8';
+            dropContent.innerHTML = `
+                <i class="fas fa-check-circle" style="font-size: 3rem; color: #28a745; margin-bottom: 15px;"></i>
+                <h3 style="color: #28a745; margin-bottom: 10px;">✅ Files Uploaded to Server!</h3>
+                <p style="color: #666; margin-bottom: 15px;">Files stored securely • Click to upload different files</p>
+                <p style="color: #999; font-size: 14px;">Your files are ready for submission</p>
+            `;
+            dropContent.style.display = 'block';
+            
+            // Store both client files and server file info
+            uploadedFiles = Array.from(files);
+            serverFileInfos = uploadedFileInfos || [];
+            
+            displayUploadedFiles();
+            
+            // Show uploaded files section
+            uploadedFilesDiv.style.display = 'block';
+            
+            console.log('✅ Upload completed:', uploadedFiles.length, 'file(s) uploaded to server');
+            console.log('📁 Server file info:', serverFileInfos);
+        }
+        
+        function displayUploadedFiles() {
+            const filesList = document.getElementById('filesList');
+            filesList.innerHTML = '';
+            
+            uploadedFiles.forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.style.cssText = `
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 10px;
+                    margin-bottom: 8px;
+                    background: white;
+                    border-radius: 6px;
+                    border: 1px solid #d4edda;
+                `;
+                
+                fileItem.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-file-archive" style="color: #28a745; font-size: 1.2rem;"></i>
+                        <div>
+                            <div style="font-weight: 600; color: #333;">${file.name}</div>
+                            <div style="color: #666; font-size: 12px;">${formatFileSize(file.size)} • ${getFileType(file.name)}</div>
+                        </div>
+                    </div>
+                    <button onclick="removeFile(${index})" style="
+                        background: #dc3545;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        padding: 5px 10px;
+                        cursor: pointer;
+                        font-size: 12px;
+                    " title="Remove file">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                
+                filesList.appendChild(fileItem);
+            });
+        }
+        
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            if (serverFileInfos.length > index) {
+                serverFileInfos.splice(index, 1);
+            }
+            
+            if (uploadedFiles.length === 0) {
+                // Reset drop zone to initial state
+                const dropZone = document.getElementById('dropZone');
+                const dropContent = document.getElementById('dropContent');
+                const uploadedFilesDiv = document.getElementById('uploadedFiles');
+                
+                dropZone.style.border = '3px dashed #007bff';
+                dropZone.style.backgroundColor = '#f8f9fa';
+                dropContent.innerHTML = `
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #007bff; margin-bottom: 15px;"></i>
+                    <h3 style="color: #333; margin-bottom: 10px;">Drag & Drop Your Project Files Here</h3>
+                    <p style="color: #666; margin-bottom: 15px;">or click to browse and select files</p>
+                    <p style="color: #999; font-size: 14px;">Supported formats: ZIP, RAR, 7Z (Max: 50MB)</p>
+                `;
+                uploadedFilesDiv.style.display = 'none';
+                
+                // Clear the file input
+                document.getElementById('fileInput').value = '';
+            } else {
+                displayUploadedFiles();
+            }
+            
+            console.log('🗑️ File removed. Remaining:', uploadedFiles.length);
+        }
+        
+        // Utility functions
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function getFileType(filename) {
+            const extension = filename.split('.').pop().toLowerCase();
+            const types = {
+                'zip': 'ZIP Archive',
+                'rar': 'RAR Archive',
+                '7z': '7-Zip Archive'
+            };
+            return types[extension] || 'Archive';
+        }
+        
+        // Reset file input when files are removed programmatically
+        function resetFileUpload() {
+            uploadedFiles = [];
+            serverFileInfos = [];
+            const dropZone = document.getElementById('dropZone');
+            const dropContent = document.getElementById('dropContent');
+            const uploadedFilesDiv = document.getElementById('uploadedFiles');
+            const fileInput = document.getElementById('fileInput');
+            
+            dropZone.style.border = '3px dashed #007bff';
+            dropZone.style.backgroundColor = '#f8f9fa';
+            dropContent.innerHTML = `
+                <i class="fas fa-cloud-upload-alt" style="font-size: 3rem; color: #007bff; margin-bottom: 15px;"></i>
+                <h3 style="color: #333; margin-bottom: 10px;">Drag & Drop Your Project Files Here</h3>
+                <p style="color: #666; margin-bottom: 15px;">or click to browse and select files</p>
+                <p style="color: #999; font-size: 14px;">Supported formats: ZIP, RAR, 7Z (Max: 50MB)</p>
+            `;
+            uploadedFilesDiv.style.display = 'none';
+            fileInput.value = '';
+        }
+    </script>
+</body>
+</html>

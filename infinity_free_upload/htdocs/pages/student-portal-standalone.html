@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belgium Campus iTversity - Student Portal</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Belgium Campus iTversity Brand Colors */
+        :root {
+            --bc-gold: #D4AF37;      /* Official Belgium Campus Gold */
+            --bc-dark-gold: #B8860B;  /* Darker Gold for accents */
+            --bc-black: #1A1A1A;      /* Deep Black */
+            --bc-white: #FFFFFF;      /* Pure White */
+            --bc-light-gold: #F4E4BC; /* Light Gold for backgrounds */
+            --bc-gray: #6C757D;       /* Professional Gray */
+        }
+        
+        /* Input field focus and hover effects */
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--bc-gold) !important;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2) !important;
+            transform: translateY(-1px);
+        }
+        
+        input:hover, textarea:hover {
+            border-color: var(--bc-dark-gold) !important;
+        }
+        
+        /* Button hover effects */
+        .btn-primary:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4) !important;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 20px rgba(26, 26, 26, 0.4) !important;
+        }
+        
+        /* Form group animations */
+        .form-group {
+            transition: all 0.3s ease;
+        }
+        
+        .form-group:hover {
+            transform: translateX(5px);
+        }
+        
+        /* Auth form animations */
+        .auth-form {
+            transition: all 0.3s ease;
+        }
+        
+        .auth-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15) !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2><i class="fas fa-graduation-cap"></i> Belgium Campus iTversity</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="home-standalone.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="hackathons-standalone.html" class="nav-link">Hackathons</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" id="student-nav-link">Student Portal</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login (on this page) -->
+    <section id="login" class="page active" style="display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 0; margin: 0; padding-top: 100px; background: linear-gradient(135deg, var(--bc-light-gold) 0%, var(--bc-gold) 100%);">
+        <div class="login-container" style="display: flex; justify-content: center; align-items: center; width: 100%; max-width: 500px; margin: 0 auto; padding: 2rem;">
+            <!-- Sign Up Form -->
+            <div class="auth-form" id="signupForm" style="width: 100%; max-width: 450px; margin: 0 auto; text-align: center; background: white; padding: 2.5rem; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid #e1e8ed;">
+                <h2 style="color: #2c3e50; margin-bottom: 2rem; font-size: 2rem; font-weight: 600;">Student Portal Sign Up</h2>
+                <form id="registrationForm">
+                    <div class="form-group" style="margin-bottom: 1.5rem; text-align: left;">
+                        <label for="regFirstName" style="display: block; margin-bottom: 0.5rem; color: #34495e; font-weight: 500; font-size: 0.9rem;">First Name</label>
+                        <input type="text" id="regFirstName" name="firstName" required style="width: 100%; padding: 12px 15px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1.5rem; text-align: left;">
+                        <label for="regLastName" style="display: block; margin-bottom: 0.5rem; color: #34495e; font-weight: 500; font-size: 0.9rem;">Last Name</label>
+                        <input type="text" id="regLastName" name="lastName" required style="width: 100%; padding: 12px 15px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1.5rem; text-align: left;">
+                        <label for="regEmail" style="display: block; margin-bottom: 0.5rem; color: #34495e; font-weight: 500; font-size: 0.9rem;">Email</label>
+                        <input type="email" id="regEmail" name="email" required style="width: 100%; padding: 12px 15px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1.5rem; text-align: left;">
+                        <label for="regStudentId" style="display: block; margin-bottom: 0.5rem; color: #34495e; font-weight: 500; font-size: 0.9rem;">Student ID</label>
+                        <input type="text" id="regStudentId" name="studentId" placeholder="e.g., 202400" maxlength="6" required style="width: 100%; padding: 12px 15px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box;">
+                        <small style="color: #7f8c8d; font-size: 0.8rem; margin-top: 0.5rem; display: block; font-style: italic;">
+                            Must be exactly 6 characters (e.g., 202400, 601681)
+                        </small>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 1.5rem; text-align: left;">
+                        <label for="regPassword" style="display: block; margin-bottom: 0.5rem; color: #34495e; font-weight: 500; font-size: 0.9rem;">Password</label>
+                        <input type="password" id="regPassword" name="password" required style="width: 100%; padding: 12px 15px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box;">
+                        <small style="color: #7f8c8d; font-size: 0.8rem; margin-top: 0.5rem; display: block; font-style: italic;">
+                            Must be at least 8 characters with 1 number and 1 special character
+                        </small>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 2rem; text-align: left;">
+                        <label for="regConfirmPassword" style="display: block; margin-bottom: 0.5rem; color: #34495e; font-weight: 500; font-size: 0.9rem;">Confirm Password</label>
+                        <input type="password" id="regConfirmPassword" name="confirmPassword" required style="width: 100%; padding: 12px 15px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box;">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px; background: linear-gradient(135deg, var(--bc-gold) 0%, var(--bc-dark-gold) 100%); border: none; color: var(--bc-black); border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);">Create Account</button>
+                </form>
+                <p class="auth-switch" style="margin-top: 2rem; color: var(--bc-gray); font-size: 0.9rem;">
+                    Already have an account? <a href="#" id="showLoginLink" style="color: var(--bc-gold); text-decoration: none; font-weight: 600;">Access Student Portal here</a>
+                </p>
+            </div>
+
+            <!-- Login Form -->
+            <div class="auth-form" id="loginFormDiv" style="display: none; width: 100%; max-width: 450px; margin: 0 auto; text-align: center; background: white; padding: 2.5rem; border-radius: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid #e1e8ed;">
+                <h2 style="color: #2c3e50; margin-bottom: 2rem; font-size: 2rem; font-weight: 600;">Student Portal Access</h2>
+                <form id="loginForm">
+                    <div class="form-group" style="margin-bottom: 1.5rem; text-align: left;">
+                        <label for="email" style="display: block; margin-bottom: 0.5rem; color: #34495e; font-weight: 500; font-size: 0.9rem;">Email</label>
+                        <input type="email" id="email" name="email" required style="width: 100%; padding: 12px 15px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box;">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 2rem; text-align: left;">
+                        <label for="password" style="display: block; margin-bottom: 0.5rem; color: #34495e; font-weight: 500; font-size: 0.9rem;">Password</label>
+                        <input type="password" id="password" name="password" required style="width: 100%; padding: 12px 15px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box;">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px; background: linear-gradient(135deg, var(--bc-gold) 0%, var(--bc-dark-gold) 100%); border: none; color: var(--bc-black); border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);">Access Portal</button>
+                </form>
+                <p class="demo-credentials" style="margin-top: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px; color: #6c757d; font-size: 0.85rem; border-left: 4px solid #17a2b8;">
+                    <strong>Note:</strong> Demo credentials are disabled for security. 
+                    You must create a real account using the signup form above.
+                </p>
+                <p class="auth-switch" style="margin-top: 2rem; color: var(--bc-gray); font-size: 0.9rem;">
+                    Don't have an account? <a href="#" id="showSignupLink" style="color: var(--bc-gold); text-decoration: none; font-weight: 600;">Sign up here</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Loading Throbber Section -->
+    <section id="loading-section" class="page" style="display: none; justify-content: center; align-items: center; min-height: 100vh; padding: 0; margin: 0; padding-top: 100px; background: linear-gradient(135deg, var(--bc-light-gold) 0%, var(--bc-gold) 100%);">
+        <div class="loading-container" style="text-align: center; background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.15); border: 1px solid #e1e8ed; max-width: 500px;">
+            <div class="throbber" style="width: 80px; height: 80px; border: 8px solid #f3f3f3; border-top: 8px solid var(--bc-gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 2rem;"></div>
+            <h2 style="color: #2c3e50; margin-bottom: 1rem; font-size: 1.8rem; font-weight: 600;">Loading Your Dashboard...</h2>
+            <p style="color: #7f8c8d; font-size: 1.1rem; margin: 0;">Please wait while we prepare your student portal</p>
+            <style>
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            </style>
+        </div>
+    </section>
+
+    <!-- Student Dashboard Page (only shown when logged in) -->
+    <section id="student-dashboard" class="page" style="background: linear-gradient(135deg, var(--bc-light-gold) 0%, var(--bc-gold) 100%); min-height: 100vh; padding-top: 100px;">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+            <div class="portal-header" style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+                <h1 style="color: #2c3e50; margin: 0; font-size: 2.5rem; font-weight: 700;">Student Dashboard</h1>
+                <div class="user-info" style="display: flex; align-items: center; gap: 1rem;">
+                    <span id="user-email" style="color: #7f8c8d; font-size: 1.1rem; font-weight: 500;">Loading...</span>
+                    <button class="btn btn-secondary" onclick="logout()" style="padding: 10px 20px; background: #e74c3c; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">Logout</button>
+                </div>
+            </div>
+            
+            <div class="portal-content">
+                <h2 style="color: #2c3e50; margin-bottom: 1.5rem; font-size: 2rem; font-weight: 600;">Your Hackathon History</h2>
+                <div class="hackathons-grid" id="student-hackathons" style="margin-bottom: 3rem;">
+                    <!-- Student's hackathons will be populated by JavaScript -->
+                </div>
+
+                <h2 style="margin-top: 2rem; color: #2c3e50; margin-bottom: 1.5rem; font-size: 2rem; font-weight: 600;">Add New Submission</h2>
+                <div class="hackathon-card" style="grid-column: 1 / -1; background: white; padding: 2.5rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #e1e8ed;">
+                    <h3 style="color: #2c3e50; margin-bottom: 2rem; font-size: 1.8rem; font-weight: 600;">Submit Your Project</h3>
+                    <form id="submissionForm">
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="submissionTitle" style="display: block; margin-bottom: 0.5rem; color: #34495e; font-weight: 500; font-size: 0.9rem;">Project Title</label>
+                            <input type="text" id="submissionTitle" name="submissionTitle" required style="width: 100%; padding: 12px 15px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box;">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 1.5rem;">
+                            <label for="submissionDesc" style="display: block; margin-bottom: 0.5rem; color: #34495e; font-weight: 500; font-size: 0.9rem;">Project Description</label>
+                            <textarea id="submissionDesc" name="submissionDesc" rows="3" required style="width: 100%; padding: 12px 15px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box; resize: vertical;"></textarea>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 2rem;">
+                            <label for="submissionLink" style="display: block; margin-bottom: 0.5rem; color: #34495e; font-weight: 500; font-size: 0.9rem;">Project Link (GitHub/Drive/etc.)</label>
+                            <input type="url" id="submissionLink" name="submissionLink" placeholder="https://..." required style="width: 100%; padding: 12px 15px; border: 2px solid #e1e8ed; border-radius: 8px; font-size: 1rem; transition: all 0.3s ease; box-sizing: border-box;">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px; background: linear-gradient(135deg, var(--bc-gold) 0%, var(--bc-dark-gold) 100%); border: none; color: var(--bc-black); border-radius: 8px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);">Submit Project</button>
+                    </form>
+                </div>
+
+                <h2 style="margin-top: 3rem; color: #2c3e50; margin-bottom: 1.5rem; font-size: 2rem; font-weight: 600;">Your Submissions</h2>
+                <div id="student-submissions" style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid #e1e8ed;">
+                    <!-- Submissions will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add the missing JavaScript functions for form switching -->
+    <script>
+        // Function to show login form
+        function showLoginForm() {
+            console.log('=== showLoginForm called ===');
+            const signupForm = document.getElementById('signupForm');
+            const loginFormDiv = document.getElementById('loginFormDiv');
+            
+            console.log('Found elements:', { 
+                signupForm: signupForm ? 'FOUND' : 'NOT FOUND', 
+                loginFormDiv: loginFormDiv ? 'FOUND' : 'NOT FOUND' 
+            });
+            
+            if (signupForm && loginFormDiv) {
+                console.log('Before change - signupForm display:', signupForm.style.display);
+                console.log('Before change - loginFormDiv display:', loginFormDiv.style.display);
+                
+                // Hide signup form and show login form
+                signupForm.style.display = 'none';
+                loginFormDiv.style.display = 'block';
+                
+                console.log('After change - signupForm display:', signupForm.style.display);
+                console.log('After change - loginFormDiv display:', loginFormDiv.style.display);
+                console.log('Login form shown, signup form hidden');
+                
+                // Force a reflow to ensure the change takes effect
+                signupForm.offsetHeight;
+                loginFormDiv.offsetHeight;
+                
+                // Double-check the display values
+                setTimeout(() => {
+                    console.log('After timeout - signupForm display:', signupForm.style.display);
+                    console.log('After timeout - loginFormDiv display:', loginFormDiv.style.display);
+                }, 100);
+            } else {
+                console.error('Forms not found:', { signupForm, loginFormDiv });
+            }
+        }
+
+        // Function to show signup form
+        function showSignupForm() {
+            console.log('=== showSignupForm called ===');
+            const signupForm = document.getElementById('signupForm');
+            const loginFormDiv = document.getElementById('loginFormDiv');
+            
+            console.log('Found elements:', { 
+                signupForm: signupForm ? 'FOUND' : 'NOT FOUND', 
+                loginFormDiv: loginFormDiv ? 'FOUND' : 'NOT FOUND' 
+            });
+            
+            if (signupForm && loginFormDiv) {
+                // Hide login form and show signup form
+                signupForm.style.display = 'block';
+                loginFormDiv.style.display = 'none';
+                console.log('Signup form shown, login form hidden');
+                
+                // Force a reflow to ensure the change takes effect
+                signupForm.offsetHeight;
+                loginFormDiv.offsetHeight;
+            } else {
+                console.error('Forms not found:', { signupForm, loginFormDiv });
+            }
+        }
+
+        // Wire the form switching links with proper event listeners
+        function wireFormSwitchingLinks() {
+            const showLoginLink = document.getElementById('showLoginLink');
+            const showSignupLink = document.getElementById('showSignupLink');
+            
+            console.log('Wiring form switching links:', { showLoginLink, showSignupLink });
+            
+            if (showLoginLink) {
+                showLoginLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Show login link clicked - calling showLoginForm()');
+                    showLoginForm();
+                });
+            } else {
+                console.error('showLoginLink not found!');
+            }
+            
+            if (showSignupLink) {
+                showSignupLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('Show signup link clicked - calling showSignupForm()');
+                    showSignupForm();
+                });
+            } else {
+                console.error('showSignupLink not found!');
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== DOMContentLoaded fired ===');
+            
+            // Test if basic JavaScript is working
+            console.log('Testing basic JavaScript...');
+            console.log('showSignupForm function exists:', typeof showSignupForm);
+            console.log('showLoginForm function exists:', typeof showLoginForm);
+            
+            try {
+                // Start with signup form visible
+                showSignupForm();
+                console.log('showSignupForm called successfully');
+                
+                // Wire the login form handler
+                wireServerAuthHandlers();
+                console.log('wireServerAuthHandlers called successfully');
+                
+                // Wire the signup form handler
+                wireSignupForm();
+                console.log('wireSignupForm called successfully');
+                
+                // Wire the form switching links
+                wireFormSwitchingLinks();
+                console.log('wireFormSwitchingLinks called successfully');
+                
+                console.log('=== All initialization complete ===');
+            } catch (error) {
+                console.error('Error during initialization:', error);
+            }
+        });
+    </script>
+
+    <!-- Include the notification system -->
+    <script src="../js/utils.js"></script>
+    
+    <script>
+        console.log('=== Script tag loaded ===');
+        
+        // Simple logout function
+        async function logout() {
+            try {
+                // Clear server-side session
+                await fetch('../server/auth.php?action=logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+            } catch (error) {
+                console.log('Server logout failed, continuing with client cleanup');
+            }
+            
+            // Clear client-side state
+            currentUser = null;
+            localStorage.clear();
+            
+            // Reset forms
+            if (document.getElementById('loginForm')) {
+                document.getElementById('loginForm').reset();
+            }
+            if (document.getElementById('registrationForm')) {
+                document.getElementById('registrationForm').reset();
+            }
+            
+            // Show signup form and hide dashboard and loading section
+            document.getElementById('student-dashboard').style.display = 'none';
+            document.getElementById('loading-section').style.display = 'none';
+            document.getElementById('login').style.display = 'block';
+            showSignupForm();
+            
+            console.log('User logged out successfully');
+            showNotification('You have been successfully logged out of the student portal.', 'success');
+        }
+        
+        // Validate current session and ensure proper state
+        async function validateSession() {
+            try {
+                const me = await fetch('../server/auth.php?action=me', { credentials: 'include' });
+                if (me.ok) {
+                    const info = await me.json();
+                    currentUser = { email: info.email };
+                    console.log('Session valid, user logged in:', info.email);
+                    return true;
+                } else {
+                    console.log('No valid session found');
+                    currentUser = null;
+                    return false;
+                }
+            } catch (error) {
+                console.log('Session validation failed:', error);
+                currentUser = null;
+                return false;
+            }
+        }
+
+        // Wire the login form submission handler
+        function wireServerAuthHandlers() {
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                // Remove any existing event listeners to prevent duplicates
+                const newLoginForm = loginForm.cloneNode(true);
+                loginForm.parentNode.replaceChild(newLoginForm, loginForm);
+                
+                // Add the event listener to the new form
+                newLoginForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    console.log('=== Login form submitted ===');
+                    
+                    const email = document.getElementById('email').value.trim();
+                    const password = document.getElementById('password').value.trim();
+                    
+                    console.log('Form values:', { email: email ? 'FILLED' : 'EMPTY', password: password ? 'FILLED' : 'EMPTY' });
+                    
+                    if (!email || !password) {
+                        console.log('Validation failed: Empty fields');
+                        showNotification('Please provide both email address and password to access the student portal.', 'error');
+                        return;
+                    }
+                    
+                    console.log('Validation passed, attempting login...');
+                    
+                    try {
+                        const res = await fetch('../server/auth.php?action=login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'include',
+                            body: JSON.stringify({ email, password })
+                        });
+                        
+                        console.log('Server response status:', res.status);
+                        const data = await res.json();
+                        console.log('Server response data:', data);
+                        console.log('Response details:', {
+                            resOk: res.ok,
+                            dataSuccess: data.success,
+                            dataError: data.error,
+                            dataKeys: Object.keys(data)
+                        });
+                        
+                        // Check if login was successful - handle different response formats
+                        if (res.ok && (data.success === true || data.ok === true)) {
+                            // Login successful
+                            console.log('Login successful, updating UI...');
+                            currentUser = { email: data.email };
+                            showNotification('Authentication successful. Please wait while we prepare your student dashboard.', 'success');
+                            
+                            // Hide login form and show loading section
+                            document.getElementById('login').style.display = 'none';
+                            document.getElementById('loading-section').style.display = 'flex';
+                            
+                            // Update user email
+                            document.getElementById('user-email').textContent = data.email;
+                            
+                            // Show loading for 3 seconds, then switch to dashboard
+                            setTimeout(() => {
+                                document.getElementById('loading-section').style.display = 'none';
+                                document.getElementById('student-dashboard').style.display = 'block';
+                                console.log('Dashboard loaded successfully');
+                            }, 3000);
+                        } else {
+                            // Login failed - show specific error
+                            console.log('Login failed - Response analysis:', {
+                                statusOk: res.ok,
+                                successValue: data.success,
+                                okValue: data.ok,
+                                errorValue: data.error,
+                                messageValue: data.message,
+                                fullResponse: data
+                            });
+                            
+                            let errorMessage = 'Authentication failed. Please verify your credentials and try again.';
+                            if (data.error) {
+                                errorMessage = data.error;
+                            } else if (data.message) {
+                                errorMessage = data.message;
+                            } else if (!res.ok) {
+                                errorMessage = `System error occurred (Status: ${res.status}). Please contact support if this persists.`;
+                            }
+                            
+                            showNotification(errorMessage, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        showNotification('Authentication process encountered an error. Please try again or contact support if this persists.', 'error');
+                    }
+                });
+                
+                console.log('Login form handler wired successfully');
+            } else {
+                console.error('Login form not found!');
+            }
+        }
+
+        // Wire the signup form submission handler
+        function wireSignupForm() {
+            const signupForm = document.getElementById('registrationForm');
+            if (signupForm) {
+                // Remove any existing event listeners to prevent duplicates
+                const newSignupForm = signupForm.cloneNode(true);
+                signupForm.parentNode.replaceChild(newSignupForm, signupForm);
+                
+                // Add the event listener to the new form
+                newSignupForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    console.log('=== Signup form submitted ===');
+                    
+                    const firstName = document.getElementById('regFirstName').value.trim();
+                    const lastName = document.getElementById('regLastName').value.trim();
+                    const email = document.getElementById('regEmail').value.trim();
+                    const studentId = document.getElementById('regStudentId').value.trim();
+                    const password = document.getElementById('regPassword').value.trim();
+                    const confirmPassword = document.getElementById('regConfirmPassword').value.trim();
+                    
+                    console.log('Form values:', { 
+                        firstName: firstName ? 'FILLED' : 'EMPTY', 
+                        lastName: lastName ? 'FILLED' : 'EMPTY', 
+                        email: email ? 'FILLED' : 'EMPTY', 
+                        studentId: studentId ? 'FILLED' : 'EMPTY', 
+                        password: password ? 'FILLED' : 'EMPTY', 
+                        confirmPassword: confirmPassword ? 'FILLED' : 'EMPTY' 
+                    });
+                    
+                    if (!firstName || !lastName || !email || !studentId || !password || !confirmPassword) {
+                        console.log('Validation failed: Empty fields');
+                        showNotification('Please complete all required fields to continue with registration.', 'error');
+                        return;
+                    }
+                    
+                    if (studentId.length !== 6) {
+                        console.log('Validation failed: Student ID length');
+                        showNotification('Student ID must be exactly 6 characters in length.', 'error');
+                        return;
+                    }
+                    
+                    if (password.length < 8) {
+                        console.log('Validation failed: Password too short');
+                        showNotification('Password must contain a minimum of 8 characters.', 'error');
+                        return;
+                    }
+                    
+                    if (password !== confirmPassword) {
+                        console.log('Validation failed: Passwords do not match');
+                        showNotification('Password confirmation does not match. Please ensure both passwords are identical.', 'error');
+                        return;
+                    }
+                    
+                    console.log('Validation passed, attempting registration...');
+                    
+                    try {
+                        const res = await fetch('../server/auth.php?action=register', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'include',
+                            body: JSON.stringify({ 
+                                firstName, lastName, email, studentId, password 
+                            })
+                        });
+                        
+                        console.log('Server response status:', res.status);
+                        const data = await res.json();
+                        console.log('Server response data:', data);
+                        
+                        // Check for different success response formats
+                        if (res.ok && (data.success === true || data.ok === true)) {
+                            console.log('Registration successful, switching to login form');
+                            showNotification('Account registration completed successfully. You may now proceed to login with your credentials.', 'success');
+                            showLoginForm();
+                        } else {
+                            console.log('Registration failed:', data.error || data.message);
+                            const errorMessage = data.error || data.message || 'Registration process could not be completed';
+                            showNotification(errorMessage, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Registration error:', error);
+                        showNotification('Registration process encountered an error. Please try again or contact support if this persists.', 'error');
+                    }
+                });
+                
+                console.log('Signup form handler wired successfully');
+            } else {
+                console.error('Signup form not found!');
+            }
+        }
+
+        // Initialize student portal when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== DOMContentLoaded fired ===');
+            
+            // Test if basic JavaScript is working
+            console.log('Testing basic JavaScript...');
+            console.log('showSignupForm function exists:', typeof showSignupForm);
+            console.log('showLoginForm function exists:', typeof showLoginForm);
+            
+            try {
+                // Start with signup form visible
+                showSignupForm();
+                console.log('showSignupForm called successfully');
+                
+                // Wire the login form handler
+                wireServerAuthHandlers();
+                console.log('wireServerAuthHandlers called successfully');
+                
+                // Wire the signup form handler
+                wireSignupForm();
+                console.log('wireSignupForm called successfully');
+                
+                // Wire the form switching links
+                wireFormSwitchingLinks();
+                console.log('wireFormSwitchingLinks called successfully');
+                
+                console.log('=== All initialization complete ===');
+            } catch (error) {
+                console.error('Error during initialization:', error);
+            }
+        });
+        
+        function loadStudentPortal() {
+            if (!currentUser) return;
+            
+            // Update user info
+            const userEmailElement = document.getElementById('user-email');
+            if (userEmailElement) {
+                userEmailElement.textContent = currentUser.email;
+            }
+            
+            // Load student's hackathons
+            loadStudentHackathons();
+
+            // Initialize dashboard
+            initDashboard();
+        }
+
+        // Server-backed portal load
+        async function loadStudentPortalSSR() {
+            if (!currentUser) return;
+            // Update email
+            const userEmailElement = document.getElementById('user-email');
+            if (userEmailElement) { userEmailElement.textContent = currentUser.email; }
+            // Render submissions from server
+            await renderSubmissionsServer();
+            // Wire submission form to server
+            initializeSubmissionForm();
+        }
+
+        // Initialize the submission form with proper event handling
+        function initializeSubmissionForm() {
+            const form = document.getElementById('submissionForm');
+            
+            if (form) {
+                // Check if form elements exist
+                const titleInput = document.getElementById('submissionTitle');
+                const descInput = document.getElementById('submissionDesc');
+                const linkInput = document.getElementById('submissionLink');
+                
+                // Force enable the inputs to ensure they're interactive
+                if (titleInput) {
+                    titleInput.disabled = false;
+                    titleInput.readOnly = false;
+                    titleInput.removeAttribute('disabled');
+                    titleInput.removeAttribute('readonly');
+                }
+                
+                if (descInput) {
+                    descInput.disabled = false;
+                    descInput.readOnly = false;
+                    descInput.removeAttribute('disabled');
+                    descInput.removeAttribute('readonly');
+                }
+                
+                if (linkInput) {
+                    linkInput.disabled = false;
+                    linkInput.readOnly = false;
+                    linkInput.removeAttribute('disabled');
+                    linkInput.removeAttribute('readonly');
+                }
+                
+                // Remove any existing event listeners to prevent duplicates
+                const newForm = form.cloneNode(true);
+                form.parentNode.replaceChild(newForm, form);
+                
+                // Add the event listener to the new form
+                newForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const title = document.getElementById('submissionTitle').value.trim();
+                    const desc = document.getElementById('submissionDesc').value.trim();
+                    const link = document.getElementById('submissionLink').value.trim();
+                    
+                    if (!title || !desc || !link) {
+                        if (typeof showNotification === 'function') {
+                            showNotification('Please fill in all fields', 'error');
+                        }
+                        return;
+                    }
+                    
+                    try {
+                        const res = await fetch('../server/submissions.php', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'include',
+                            body: JSON.stringify({ title, desc, link })
+                        });
+                        
+                        if (res.ok) {
+                            if (typeof showNotification === 'function') {
+                                showNotification('Submission added successfully!', 'success');
+                            }
+                            newForm.reset();
+                            await renderSubmissionsServer();
+                        } else {
+                            if (typeof showNotification === 'function') {
+                                showNotification('Failed to add submission', 'error');
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Submission error:', error);
+                        if (typeof showNotification === 'function') {
+                            showNotification('Error adding submission', 'error');
+                        }
+                    }
+                });
+            }
+        }
+
+        // Dashboard logic (localStorage persistence)
+        function getSubmissionKey() {
+            return 'submissions_' + (currentUser ? currentUser.email : 'guest');
+        }
+
+        function initDashboard() {
+            const form = document.getElementById('submissionForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const title = document.getElementById('submissionTitle').value.trim();
+                    const desc = document.getElementById('submissionDesc').value.trim();
+                    const link = document.getElementById('submissionLink').value.trim();
+                    if (!title || !desc || !link) return;
+                    const key = getSubmissionKey();
+                    const list = JSON.parse(localStorage.getItem(key) || '[]');
+                    list.push({ id: Date.now(), title, desc, link, createdAt: new Date().toISOString() });
+                    localStorage.setItem(key, JSON.stringify(list));
+                    form.reset();
+                    renderSubmissions();
+                    if (typeof showNotification === 'function') {
+                        showNotification('Submission added.', 'success');
+                    }
+                });
+            }
+            renderSubmissions();
+        }
+
+        function renderSubmissions() {
+            const container = document.getElementById('student-submissions');
+            if (!container) return;
+            const key = getSubmissionKey();
+            const list = JSON.parse(localStorage.getItem(key) || '[]');
+            if (list.length === 0) {
+                container.innerHTML = '<p>No submissions yet.</p>';
+                return;
+            }
+            container.innerHTML = '';
+            list.slice().reverse().forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'hackathon-card';
+                div.style.marginBottom = '1rem';
+                div.innerHTML = `
+                    <h4>${item.title}</h4>
+                    <p class="description">${item.desc}</p>
+                    <p><a href="${item.link}" target="_blank" rel="noopener">View Link</a></p>
+                    <div class="user-info" style="display:flex; gap: 1rem;">
+                        <small>${new Date(item.createdAt).toLocaleString()}</small>
+                        <button class="btn btn-secondary" data-id="${item.id}">Remove</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            // Wire remove buttons
+            container.querySelectorAll('button[data-id]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    const key = getSubmissionKey();
+                    const list = JSON.parse(localStorage.getItem(key) || '[]');
+                    const next = list.filter(x => x.id !== id);
+                    localStorage.setItem(key, JSON.stringify(next));
+                    renderSubmissions();
+                    if (typeof showNotification === 'function') {
+                        showNotification('Submission removed.', 'success');
+                    }
+                });
+            });
+        }
+
+        async function renderSubmissionsServer() {
+            const container = document.getElementById('student-submissions');
+            if (!container) return;
+            const res = await fetch('../server/submissions.php', { credentials: 'include' });
+            if (!res.ok) { container.innerHTML = '<p>No submissions yet.</p>'; return; }
+            const data = await res.json();
+            const list = Array.isArray(data.items) ? data.items : [];
+            if (list.length === 0) { container.innerHTML = '<p>No submissions yet.</p>'; return; }
+            container.innerHTML = '';
+            list.slice().reverse().forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'hackathon-card';
+                div.style.marginBottom = '1rem';
+                div.innerHTML = `
+                    <h4>${item.title}</h4>
+                    <p class="description">${item.desc}</p>
+                    <p><a href="${item.link}" target="_blank" rel="noopener">View Link</a></p>
+                    <div class="user-info" style="display:flex; gap: 1rem;">
+                        <small>${new Date(item.createdAt).toLocaleString()}</small>
+                        <button class="btn btn-secondary" data-id="${item.id}">Remove</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            
+            // Wire remove buttons for server submissions
+            container.querySelectorAll('button[data-id]').forEach(btn => {
+                btn.addEventListener('click', async function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    try {
+                        const res = await fetch('../server/submissions.php', {
+                            method: 'DELETE',
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'include',
+                            body: JSON.stringify({ id })
+                        });
+                        
+                        if (res.ok) {
+                            if (typeof showNotification === 'function') {
+                                showNotification('Submission removed successfully!', 'success');
+                            }
+                            await renderSubmissionsServer();
+                        } else {
+                            if (typeof showNotification === 'function') {
+                                showNotification('Failed to remove submission', 'error');
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Remove error:', error);
+                        if (typeof showNotification === 'function') {
+                            showNotification('Error removing submission', 'error');
+                        }
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>

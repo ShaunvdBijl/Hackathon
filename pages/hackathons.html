@@ -1,0 +1,103 @@
+<!-- Hackathons Page -->
+<section id="hackathons" class="page">
+    <div class="container">
+        <h1>Hackathons</h1>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('upcoming')">Upcoming</button>
+            <button class="tab-btn" onclick="showTab('past')">Past</button>
+        </div>
+        
+        <div id="upcoming" class="tab-content active">
+            <h2>Upcoming Hackathons</h2>
+            <div class="hackathons-grid" id="upcoming-hackathons">
+                <!-- Upcoming hackathons will be populated by JavaScript -->
+            </div>
+        </div>
+        
+        <div id="past" class="tab-content">
+            <h2>Past Hackathons</h2>
+            <div class="hackathons-grid" id="past-hackathons">
+                <!-- Past hackathons will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Hackathon Details Section -->
+<section id="hackathon-details" class="page">
+    <div class="container">
+        <h2>Hackathon Details</h2>
+
+        <!-- Collapsible summary panel -->
+        <div class="hackathon-card" id="hackathon-summary-toggle" style="cursor: pointer; margin-bottom: 1rem;">
+            <h3 style="display:flex; justify-content:space-between; align-items:center;">Stellenbosch Campus Hackathon <span style="font-size:0.9rem; color:var(--bc-gold);">Click to view details ▾</span></h3>
+            <ul style="margin-top:0.5rem;">
+                <li><strong>Date/Time:</strong> 13 September, 08:00 – 20:00</li>
+                <li><strong>Place:</strong> Belgium Campus — Stellenbosch campus</li>
+            </ul>
+        </div>
+
+        <div class="hackathons-grid" id="hackathon-full-details" style="display:none;">
+            <div class="hackathon-card">
+                <h3>Event Overview</h3>
+                <p id="hackathon-overview">Hackathon hosted at the Stellenbosch campus. See schedule, rules and prizes below. Full brief available for download.</p>
+                <p>
+                    <a class="btn btn-primary" href="../docs/first-hackathon-details.docx" download>
+                        <i class="fas fa-download"></i> Download Full Brief (DOCX)
+                    </a>
+                </p>
+            </div>
+            <div class="hackathon-card">
+                <h3>Key Information</h3>
+                <ul>
+                    <li><strong>Theme:</strong> <span id="hackathon-theme">Applied tech build (see idea topics below)</span></li>
+                    <li><strong>Date/Time:</strong> <span id="hackathon-date">13 September, 08:00 – 20:00</span></li>
+                    <li><strong>Venue:</strong> <span id="hackathon-venue">Belgium Campus — Stellenbosch campus</span></li>
+                    <li><strong>Eligibility:</strong> <span id="hackathon-registration">Only Stellenbosch students</span></li>
+                    <li><strong>Prizes:</strong> <span id="hackathon-prizes">Top 3 projects receive prizes; Judges’ favourite extra prize; Prize for most “out‑of‑syllabus” tools</span></li>
+                </ul>
+            </div>
+            <div class="hackathon-card">
+                <h3>Rules & Guidelines</h3>
+                <ul id="hackathon-rules">
+                    <li>Teams of 3–5 or solo allowed.</li>
+                    <li>AI use restricted to dedicated research time or if building your own AI component.</li>
+                    <li>Moderators will ensure fair play.</li>
+                    <li>Technolab resources may be used.</li>
+                </ul>
+            </div>
+            <div class="hackathon-card">
+                <h3>Schedule</h3>
+                <ul>
+                    <li>08:00 – 08:10: Welcoming</li>
+                    <li>08:10 – 08:40: Topic explanation & idealization</li>
+                    <li>08:40 – 08:50: Team selection</li>
+                    <li>08:50 – 10:00: Project planning</li>
+                    <li>10:00 – 11:00: VR presentation</li>
+                    <li>11:00 – 12:30: 3D printing / laser cutting time</li>
+                    <li>12:30 – 13:30: Lunch break</li>
+                    <li>13:30 – 14:00: Drones presentation</li>
+                    <li>14:00 – 16:00: Development time</li>
+                    <li>16:00 – 16:30: Implementation phase</li>
+                    <li>16:30 – 19:30: Final implementation</li>
+                    <li>19:30 – 20:00: Presentations; prizes and winners announced</li>
+                </ul>
+            </div>
+            <!-- Idea Topics intentionally hidden before event -->
+        </div>
+    </div>
+    <script>
+        (function(){
+            var toggle = document.getElementById('hackathon-summary-toggle');
+            var details = document.getElementById('hackathon-full-details');
+            if (toggle && details) {
+                toggle.addEventListener('click', function(){
+                    var isHidden = details.style.display === 'none' || details.style.display === '';
+                    details.style.display = isHidden ? 'grid' : 'none';
+                    var hint = toggle.querySelector('span');
+                    if (hint) hint.textContent = isHidden ? 'Click to hide details ▴' : 'Click to view details ▾';
+                });
+            }
+        })();
+    </script>
+</section>
