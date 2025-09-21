@@ -324,13 +324,6 @@ function showRegistrationModal(hackathonId) {
                         <input type="text" id="teamName" name="teamName" placeholder="Enter team name or leave blank for solo">
                     </div>
                     
-                    <div class="form-group" style="margin-bottom: 1rem;">
-                        <label for="projectCategory">Project Category</label>
-                        <select id="projectCategory" name="projectCategory" required>
-                            <option value="">Select a category</option>
-                            ${hackathon.categories.map(cat => `<option value="${cat}">${cat}</option>`).join('')}
-                        </select>
-                    </div>
                     
                     <div class="form-group" style="margin-bottom: 1rem;">
                         <label for="specialRequirements">Special Requirements</label>
@@ -366,7 +359,6 @@ function showRegistrationModal(hackathonId) {
         
         const formData = {
             teamName: document.getElementById('teamName').value.trim(),
-            projectCategory: document.getElementById('projectCategory').value,
             specialRequirements: document.getElementById('specialRequirements').value.trim(),
             agreeTerms: document.getElementById('agreeTerms').checked
         };
