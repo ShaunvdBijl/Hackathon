@@ -97,32 +97,28 @@
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Simple login page initialization
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Login page loaded successfully!');
-            
-            // Test if functions exist
-            console.log('setupLoginForm exists:', typeof setupLoginForm);
-            console.log('initializeAuth exists:', typeof initializeAuth);
-            console.log('showNotification exists:', typeof showNotification);
-            
-            // Initialize auth from localStorage first
-            if (typeof initializeAuth === 'function') {
-                initializeAuth();
-                console.log('✅ initializeAuth called');
-            } else {
-                console.error('❌ initializeAuth function not found');
+        // Check if user is already logged in and redirect if so
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('Login page loaded, checking authentication status...');
+
+            // Initialize auth from localStorage
+            initializeAuth();
+
+            // Check server-side authentication
+            const authResult = await checkAuthStatus();
+            console.log('Auth check result:', authResult);
+
+            if (authResult.authenticated) {
+                console.log('User already authenticated, redirecting to dashboard...');
+                showNotification('Welcome back! Redirecting to your dashboard...', 'success');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+                return;
             }
 
-            // Setup login form immediately
-            if (typeof setupLoginForm === 'function') {
-                setupLoginForm();
-                console.log('✅ setupLoginForm called');
-            } else {
-                console.error('❌ setupLoginForm function not found');
-            }
-
-            console.log('🎯 Login page initialization complete');
+            // User not authenticated, setup login form
+            setupLoginForm();
         });
     </script>
 </body>

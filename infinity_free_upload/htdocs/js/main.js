@@ -9,7 +9,20 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
 });
 
-// Note: initializeAuth function is defined in auth.js to avoid conflicts
+// Initialize authentication from localStorage
+function initializeAuth() {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+        try {
+            currentUser = JSON.parse(storedUser);
+            console.log('User session restored from localStorage:', currentUser);
+        } catch (e) {
+            console.error('Error parsing stored user data:', e);
+            localStorage.removeItem('currentUser');
+            currentUser = null;
+        }
+    }
+}
 
 // Initialize the application
 function initializeApp() {

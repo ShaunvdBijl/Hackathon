@@ -325,8 +325,6 @@
                         showLoginForm();
                         registrationForm.reset();
                     } else {
-                        console.log('❌ Registration failed:', data.error || data.message);
-                        console.log('❌ Full response data:', data);
                         const errorMessage = data.error || data.message || 'Registration failed';
                         showNotification(errorMessage, 'error');
                     }
@@ -387,8 +385,6 @@
                             window.location.href = 'dashboard.html';
                         }, 1500);
                     } else {
-                        console.log('❌ Login failed:', data.error);
-                        console.log('❌ Full response data:', data);
                         const errorMessage = data.error || 'Login failed';
                         showNotification(errorMessage, 'error');
                     }
