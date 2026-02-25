@@ -425,9 +425,6 @@
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-xl);
     border: 1px solid rgba(0,0,0,0.05);
-    overflow-x: auto;
-    display: block;
-    white-space: nowrap;
 }
 
 .hackathon-details-table td {
@@ -441,9 +438,6 @@
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
-    display: inline-block;
-    white-space: normal;
-    min-width: 300px;
 }
 
 .hackathon-details-table td::before {
@@ -503,60 +497,6 @@
     border-bottom: none;
 }
 
-/* Full-width table cells */
-.hackathon-details-full-width {
-    width: 100%;
-    vertical-align: top;
-    padding: var(--space-xl);
-    border: 2px solid var(--bc-gold);
-    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-    border-radius: var(--radius-lg);
-    min-height: 250px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.hackathon-details-full-width::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--primary-gradient);
-}
-
-/* Schedule Grid */
-.schedule-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-.schedule-session h4 {
-    color: var(--bc-black);
-    margin-bottom: var(--space-md);
-    font-size: var(--text-xl);
-    border-bottom: 2px solid var(--bc-gold);
-    padding-bottom: var(--space-sm);
-}
-
-/* Technologies Grid */
-.technologies-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-.technology-category h4 {
-    color: var(--bc-black);
-    margin-bottom: var(--space-md);
-    font-size: var(--text-lg);
-    border-bottom: 1px solid var(--bc-gold);
-    padding-bottom: var(--space-xs);
-}
-
 /* Student Portal Page - Enhanced */
 #student-portal {
     display: flex;
@@ -585,7 +525,7 @@
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-xl);
     width: 100%;
-    max-width: 550px;
+    max-width: 450px;
     position: relative;
     z-index: 2;
     border: 1px solid rgba(0,0,0,0.05);
@@ -710,60 +650,34 @@
         text-align: center;
         gap: var(--space-lg);
     }
-
+    
     .hero-content h1 {
         font-size: var(--text-4xl);
     }
-
+    
     .hero-image i {
         font-size: 15rem;
     }
-
+    
     .hackathon-details-table {
         border-spacing: var(--space-md);
         padding: var(--space-lg);
-        overflow-x: auto;
-        display: block;
-        white-space: nowrap;
     }
-
+    
     .hackathon-details-table td {
-        width: auto;
-        display: inline-block;
+        width: 100%;
+        display: block;
         margin-bottom: var(--space-md);
-        min-height: auto;
-        min-width: 300px;
-        white-space: normal;
     }
-
+    
     .tabs {
         flex-direction: column;
         max-width: 300px;
     }
-
+    
     .hackathon-card-meta {
         flex-direction: column;
         gap: var(--space-md);
         align-items: flex-start;
-    }
-
-    .login-container {
-        max-width: 500px;
-        padding: var(--space-lg);
-    }
-
-    /* Mobile responsive grids for larger screens */
-    .schedule-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .technologies-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-
-    .hackathon-details-full-width {
-        padding: var(--space-lg);
     }
 }

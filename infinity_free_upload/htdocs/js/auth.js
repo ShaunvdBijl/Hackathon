@@ -42,12 +42,8 @@ function handleLogin(e) {
             password: password
         })
     })
-    .then(response => {
-        console.log('Login response status:', response.status);
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log('Login response data:', data);
         if (data.ok) {
             // Store user info in localStorage for UI convenience
             currentUser = {
@@ -65,8 +61,6 @@ function handleLogin(e) {
                 window.location.href = 'dashboard.html';
             }, 1000);
         } else {
-            // Show the detailed error message from PHP
-            console.log('Login failed with error:', data.error);
             showNotification(data.error || 'Login failed. Please try again.', 'error');
         }
     })
@@ -167,18 +161,10 @@ function logout() {
 function checkAuthStatus() {
     return fetch('server/auth.php?action=me', {
         method: 'GET',
-        credentials: 'same-origin',
-        timeout: 5000 // 5 second timeout
+        credentials: 'same-origin'
     })
-    .then(response => {
-        console.log('Auth check response status:', response.status);
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log('Auth check response data:', data);
         if (data.ok) {
             // Update localStorage with server data
             currentUser = {
@@ -227,6 +213,39 @@ function initializeAuth() {
             currentUser = null;
         }
     }
+}
+function login(email, password) {
+    if (!email || !password) {
+        showNotification("Please enter both email and password.", "error");
+        return;
+    }
+
+    // Send login request to PHP backend
+    fetch('php/login.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Store user session (if needed, e.g. for UI convenience)
+            localStorage.setItem("currentUser", JSON.stringify({ email: email }));
+
+            showNotification("Login successful! Redirecting...", "success");
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 800);
+        } else {
+            showNotification(data.message || "Invalid login details!", "error");
+        }
+    })
+    .catch(error => {
+        console.error('Login error:', error);
+        showNotification("An error occurred during login. Please try again.", "error");
+    });
 }
 
 

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XAMPP Test</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff);
+            color: white;
+            text-align: center;
+            padding: 50px;
+            font-size: 24px;
+        }
+        .test-box {
+            background: rgba(0,0,0,0.7);
+            padding: 30px;
+            border-radius: 20px;
+            border: 5px solid yellow;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-box">
+        <h1>🚀 XAMPP TEST FILE 🚀</h1>
+        <p>If you can see this, XAMPP is working!</p>
+        <p>Current time: <span id="time"></span></p>
+        <p style="color: yellow; font-weight: bold;">This file was created to test XAMPP functionality</p>
+    </div>
+    
+    <script>
+        document.getElementById('time').textContent = new Date().toLocaleString();
+        console.log('XAMPP test file loaded successfully!');
+    </script>
+</body>
+</html>

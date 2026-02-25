@@ -2,12 +2,12 @@
 const hackathonsData = {
     upcoming: [
         {
-            id: "stellenbosch-2024",
+            id: "stellenbosch-2025",
             title: "Stellenbosch Campus Hackathon",
-            date: "13 September, 08:00 – 20:00",
+            date: "11 October, 08:00 – 20:00",
             description: "Join us for an exciting hackathon at the Stellenbosch campus. Build innovative solutions and compete for amazing prizes!",
             status: "upcoming",
-            participants: "Teams of 3-5 or solo",
+            participants: "Teams of 3",
             prize: "Top 3 Prizes",
             detailsDoc: "First hackathon full details.docx",
             maxParticipants: null, // No participant cap
