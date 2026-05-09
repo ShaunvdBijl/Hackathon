@@ -15,6 +15,27 @@ const hackathonsData = {
             registrationDeadline: "2025-12-31", // Extended deadline to end of 2025
             requirements: ["Stellenbosch students only", "Valid student ID", "Team formation allowed"],
             categories: ["Web Development", "Mobile Apps", "AI/ML", "IoT", "Game Development"]
+        },
+        {
+            id: "hackathon-2026-senses",
+            title: "Hackathon 2026",
+            date: "11 July 2026, 08:00 - 12 July 2026, 08:00 (24 hours)",
+            description: "Theme: Senses. Teams choose one sense (taste, sight, hearing, smell, touch) and build a project where that sense triggers a real action.",
+            status: "upcoming",
+            participants: "Teams of up to 4 (solo allowed)",
+            prize: "24-Hour Senses Challenge",
+            maxParticipants: null, // No participant cap
+            currentParticipants: 0,
+            registrationDeadline: "2026-07-10",
+            requirements: [
+                "Choose one sense: taste, sight, hearing, smell, or touch",
+                "Sense input must trigger a measurable outcome",
+                "AI use allowed only during scheduled research timeslots",
+                "No AI use outside allowed timeslots",
+                "Students may arrive with a pre-formed team or create one onsite",
+                "Maximum 4 students per team; solo entries are allowed but disadvantaged"
+            ],
+            categories: ["Taste", "Sight", "Hearing", "Smell", "Touch"]
         }
     ],
     past: []
