@@ -1,8 +1,11 @@
 <?php
+// ============================================================
+//  hackathon-registrations.php — Register / Unregister / Query
+//  Now reads/writes the MySQL `hackathon_registrations` table
+// ============================================================
 session_start();
 header('Content-Type: application/json');
 
-// Allow simple CORS for local testing
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
     header('Access-Control-Allow-Credentials: true');
@@ -14,201 +17,208 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+require_once __DIR__ . '/db.php';
+
 function respond($data, $status = 200) {
     http_response_code($status);
     echo json_encode($data);
     exit;
 }
 
-function getRegistrationsFile() {
-    $dataDir = '../data_store';
-    if (!is_dir($dataDir)) {
-        mkdir($dataDir, 0755, true);
-    }
-    return $dataDir . '/hackathon-registrations.json';
-}
+$db = getDB();
 
-function loadRegistrations() {
-    $file = getRegistrationsFile();
-    if (file_exists($file)) {
-        $data = file_get_contents($file);
-        return json_decode($data, true) ?: [];
-    }
-    return [];
-}
-
-function saveRegistrations($registrations) {
-    $file = getRegistrationsFile();
-    file_put_contents($file, json_encode($registrations, JSON_PRETTY_PRINT));
-}
-
-function logAction($action, $data) {
-    $logFile = '../data_store/hackathon-registrations.log';
-    $timestamp = date('Y-m-d H:i:s');
-    $logEntry = "[$timestamp] $action: " . json_encode($data) . "\n";
-    file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
-}
-
-// Handle POST requests
+// ── POST requests ────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
-    
+
     if (!$input) {
         respond(['error' => 'Invalid JSON input'], 400);
     }
-    
+
     $action = $input['action'] ?? '';
-    
+
     switch ($action) {
         case 'register':
-            handleRegistration($input);
+            handleRegistration($input, $db);
             break;
-            
+
         case 'update':
-            handleUpdate($input);
+            handleUpdate($input, $db);
             break;
-            
+
         case 'get_user_registrations':
-            handleGetUserRegistrations($input);
+            handleGetUserRegistrations($input, $db);
             break;
-            
+
         default:
             respond(['error' => 'Invalid action'], 400);
     }
 }
 
-// Handle GET requests
+// ── GET requests ─────────────────────────────────────────────
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $action = $_GET['action'] ?? '';
-    
+
     switch ($action) {
         case 'get_user_registrations':
-            handleGetUserRegistrations($_GET);
+            handleGetUserRegistrations($_GET, $db);
             break;
-            
+
         case 'get_hackathon_registrations':
-            handleGetHackathonRegistrations($_GET);
+            handleGetHackathonRegistrations($_GET, $db);
             break;
-            
+
         default:
             respond(['error' => 'Invalid action'], 400);
     }
 }
 
-function handleRegistration($input) {
+// ── Handlers ─────────────────────────────────────────────────
+
+function handleRegistration($input, $db) {
     $registration = $input['registration'] ?? null;
-    
+
     if (!$registration) {
         respond(['error' => 'Registration data required'], 400);
     }
-    
-    // Validate required fields
+
     $required = ['hackathonId', 'userEmail'];
     foreach ($required as $field) {
         if (empty($registration[$field])) {
             respond(['error' => "Missing required field: $field"], 400);
         }
     }
-    
-    // Load existing registrations
-    $registrations = loadRegistrations();
-    
-    // Check if user is already registered
-    if (isset($registrations[$registration['hackathonId']])) {
-        foreach ($registrations[$registration['hackathonId']] as $existingReg) {
-            if ($existingReg['userEmail'] === $registration['userEmail']) {
-                respond(['error' => 'User already registered for this hackathon'], 409);
-            }
-        }
+
+    // Check for duplicate
+    $stmt = $db->prepare(
+        'SELECT id FROM hackathon_registrations WHERE hackathon_id = ? AND user_email = ?'
+    );
+    $stmt->execute([$registration['hackathonId'], $registration['userEmail']]);
+    if ($stmt->fetch()) {
+        respond(['error' => 'User already registered for this hackathon'], 409);
     }
-    
-    // Add registration
-    if (!isset($registrations[$registration['hackathonId']])) {
-        $registrations[$registration['hackathonId']] = [];
-    }
-    
-    $registrations[$registration['hackathonId']][] = $registration;
-    
-    // Save to file
-    saveRegistrations($registrations);
-    
-    // Log the action
-    logAction('REGISTER', $registration);
-    
+
+    // Build the registration ID
+    $regId = $registration['id'] ?? ('reg_' . time());
+
+    $stmt = $db->prepare(
+        'INSERT INTO hackathon_registrations
+            (id, hackathon_id, user_email, status, team_name, team_members, registration_date)
+         VALUES (?, ?, ?, ?, ?, ?, NOW())'
+    );
+    $stmt->execute([
+        $regId,
+        $registration['hackathonId'],
+        $registration['userEmail'],
+        $registration['status']      ?? 'registered',
+        $registration['teamName']    ?? null,
+        isset($registration['teamMembers']) ? json_encode($registration['teamMembers']) : null
+    ]);
+
+    // Update participant count on the hackathon
+    $db->prepare(
+        'UPDATE hackathons SET current_participants = current_participants + 1 WHERE id = ?'
+    )->execute([$registration['hackathonId']]);
+
     respond(['ok' => true, 'message' => 'Registration successful', 'registration' => $registration]);
 }
 
-function handleUpdate($input) {
+function handleUpdate($input, $db) {
     $hackathonId = $input['hackathonId'] ?? '';
-    $userEmail = $input['userEmail'] ?? '';
-    $status = $input['status'] ?? '';
-    
+    $userEmail   = $input['userEmail']   ?? '';
+    $status      = $input['status']      ?? '';
+
     if (!$hackathonId || !$userEmail) {
         respond(['error' => 'Hackathon ID and user email required'], 400);
     }
-    
-    $registrations = loadRegistrations();
-    
-    if (!isset($registrations[$hackathonId])) {
-        respond(['error' => 'Hackathon not found'], 404);
-    }
-    
-    // Find and update the registration
-    $found = false;
-    foreach ($registrations[$hackathonId] as &$reg) {
-        if ($reg['userEmail'] === $userEmail) {
-            $reg['status'] = $status;
-            $reg['updatedAt'] = date('Y-m-d H:i:s');
-            $found = true;
-            break;
-        }
-    }
-    
-    if (!$found) {
+
+    $stmt = $db->prepare(
+        'UPDATE hackathon_registrations SET status = ?, updated_at = NOW()
+         WHERE hackathon_id = ? AND user_email = ?'
+    );
+    $stmt->execute([$status, $hackathonId, $userEmail]);
+
+    if ($stmt->rowCount() === 0) {
         respond(['error' => 'Registration not found'], 404);
     }
-    
-    // Save updated registrations
-    saveRegistrations($registrations);
-    
-    // Log the action
-    logAction('UPDATE', ['hackathonId' => $hackathonId, 'userEmail' => $userEmail, 'status' => $status]);
-    
+
+    // If unregistered, decrement participant count
+    if ($status === 'unregistered') {
+        $db->prepare(
+            'UPDATE hackathons SET current_participants = GREATEST(current_participants - 1, 0) WHERE id = ?'
+        )->execute([$hackathonId]);
+    }
+
     respond(['ok' => true, 'message' => 'Registration updated successfully']);
 }
 
-function handleGetUserRegistrations($input) {
+function handleGetUserRegistrations($input, $db) {
     $userEmail = $input['user_email'] ?? $input['userEmail'] ?? '';
-    
+
     if (!$userEmail) {
         respond(['error' => 'User email required'], 400);
     }
-    
-    $registrations = loadRegistrations();
-    $userRegistrations = [];
-    
-    foreach ($registrations as $hackathonId => $hackathonRegs) {
-        foreach ($hackathonRegs as $reg) {
-            if ($reg['userEmail'] === $userEmail) {
-                $userRegistrations[] = array_merge($reg, ['hackathonId' => $hackathonId]);
-            }
-        }
+
+    $stmt = $db->prepare(
+        'SELECT r.*, h.title AS hackathon_title, h.event_date, h.status AS hackathon_status
+         FROM hackathon_registrations r
+         LEFT JOIN hackathons h ON h.id = r.hackathon_id
+         WHERE r.user_email = ?
+         ORDER BY r.registration_date DESC'
+    );
+    $stmt->execute([$userEmail]);
+    $rows = $stmt->fetchAll();
+
+    // Map column names to match the frontend expectations
+    $registrations = [];
+    foreach ($rows as $row) {
+        $registrations[] = [
+            'id'               => $row['id'],
+            'hackathonId'      => $row['hackathon_id'],
+            'userEmail'        => $row['user_email'],
+            'status'           => $row['status'],
+            'registrationDate' => $row['registration_date'],
+            'hackathonTitle'   => $row['hackathon_title'],
+            'eventDate'        => $row['event_date'],
+            'hackathonStatus'  => $row['hackathon_status']
+        ];
     }
-    
-    respond(['ok' => true, 'registrations' => $userRegistrations]);
+
+    respond(['ok' => true, 'registrations' => $registrations]);
 }
 
-function handleGetHackathonRegistrations($input) {
+function handleGetHackathonRegistrations($input, $db) {
     $hackathonId = $input['hackathon_id'] ?? $input['hackathonId'] ?? '';
-    
+
     if (!$hackathonId) {
         respond(['error' => 'Hackathon ID required'], 400);
     }
-    
-    $registrations = loadRegistrations();
-    $hackathonRegistrations = $registrations[$hackathonId] ?? [];
-    
-    respond(['ok' => true, 'registrations' => $hackathonRegistrations]);
+
+    $stmt = $db->prepare(
+        'SELECT r.*, u.first_name, u.last_name, u.student_id
+         FROM hackathon_registrations r
+         LEFT JOIN users u ON u.email = r.user_email
+         WHERE r.hackathon_id = ?
+         ORDER BY r.registration_date ASC'
+    );
+    $stmt->execute([$hackathonId]);
+    $rows = $stmt->fetchAll();
+
+    $registrations = [];
+    foreach ($rows as $row) {
+        $registrations[] = [
+            'id'               => $row['id'],
+            'hackathonId'      => $row['hackathon_id'],
+            'userEmail'        => $row['user_email'],
+            'status'           => $row['status'],
+            'registrationDate' => $row['registration_date'],
+            'firstName'        => $row['first_name'],
+            'lastName'         => $row['last_name'],
+            'studentId'        => $row['student_id']
+        ];
+    }
+
+    respond(['ok' => true, 'registrations' => $registrations]);
 }
 
 // Default response for unsupported methods
